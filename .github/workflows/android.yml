@@ -1,0 +1,45 @@
+name: Android APK Build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Kodu al
+      uses: actions/checkout@v3
+
+    - name: Python kur
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Gerekli paketler
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          openjdk-17-jdk \
+          zip unzip \
+          python3-pip \
+          build-essential \
+          libffi-dev \
+          libssl-dev \
+          zlib1g-dev
+
+    - name: Buildozer kur
+      run: |
+        pip install --upgrade pip
+        pip install buildozer cython
+
+    - name: APK oluştur
+      run: |
+        buildozer android debug
+
+    - name: APK kaydet
+      uses: actions/upload-artifact@v3
+      with:
+        name: AkilliKalkan-APK
+        path: bin/*.apk
