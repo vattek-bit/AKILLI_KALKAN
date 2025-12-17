@@ -39,7 +39,7 @@ jobs:
         buildozer android debug
 
     - name: APK kaydet
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AkilliKalkan-APK
         path: bin/*.apk
